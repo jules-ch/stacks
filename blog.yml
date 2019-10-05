@@ -13,7 +13,7 @@ services:
         traefik.http.routers.ghost.entrypoints: http
         traefik.http.routers.ghost.rule: Host(`${DOMAIN_GHOST:?err}`)
         traefik.http.routers.ghost.middlewares: redirect-https
-        traefik.http.routers.ghost-secure.entrypoints: http
+        traefik.http.routers.ghost-secure.entrypoints: https
         traefik.http.routers.ghost-secure.rule: Host(`${DOMAIN_GHOST:?err}`)
         traefik.http.routers.ghost-secure.tls.certresolver: letsencrypt
         traefik.http.services.ghost-service.loadbalancer.server.port: "2368"
