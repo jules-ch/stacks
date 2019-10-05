@@ -1,0 +1,33 @@
+debug = false
+logLevel = "INFO"
+defaultEntryPoints = ["https","http"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+
+[providers.docker]
+  swarmmode = true
+  exposedByDefault = false
+
+# Enable ACME (Let's Encrypt): automatic SSL.
+[certificatesResolvers.letsencrypt.acme]
+
+  email = "me@julescheron.com"
+  # certificates storage.
+  storage = "/letsencrypt/acme.json"
+  keyType = "RSA4096"
+
+  # Use a TLS-ALPN-01 ACME challenge.
+  [certificatesResolvers.letsencrypt.acme.tlsChallenge]
+
+
+[accessLog]
+  filePath = "/var/log/traefik/access.log.json"
+  format = "json"
