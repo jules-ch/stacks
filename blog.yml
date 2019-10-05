@@ -6,11 +6,11 @@ services:
     volumes:
       - ghost:/var/lib/ghost/content:nocopy
     environment:
-      url: https://${DOMAIN:?err}
+      url: https://${DOMAIN_GHOST:?err}
     deploy:
       labels:
         traefik.http.routers.ghost.entrypoints: https
-        traefik.http.routers.ghost.rule: Host(`${DOMAIN:?err}`)
+        traefik.http.routers.ghost.rule: Host(`${DOMAIN_GHOST:?err}`)
         traefik.http.routers.ghost.tls.certresolver: letsencrypt
         traefik.http.services.ghost-service.loadbalancer.server.port: "2368"
         traefik.enable: "true"
