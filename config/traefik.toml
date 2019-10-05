@@ -24,3 +24,6 @@ defaultEntryPoints = ["https","http"]
 
   # Use a TLS-ALPN-01 ACME challenge.
   [certificatesResolvers.letsencrypt.acme.tlsChallenge]
+
+[api]
+  dashboard = true

@@ -18,12 +18,18 @@ services:
     deploy:
       placement:
         constraints: [node.role==manager]
+      labels:
+        traefik.http.routers.api.rule: Host(`${DOMAIN_TRAEFIK:?err}`)
+        traefik.http.routers.api.service: api@internal
+        traefik.http.routers.api.middlewares: ipwhitelist
+        traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange: ${IP_WHITELIST:?err}, 127.0.0.1
     configs:
-      - source: config
+      - source: traefik.toml
         target: /traefik.toml
 configs:
-  config:
+  traefik.toml:
     file: ./config/traefik.toml
+    name: traefik.toml-${CONFIG_VERSION:-0}
 
 volumes:
   certs:
