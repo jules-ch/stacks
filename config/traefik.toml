@@ -26,10 +26,5 @@ defaultEntryPoints = ["https","http"]
   # Use a TLS-ALPN-01 ACME challenge.
   [certificatesResolvers.letsencrypt.acme.tlsChallenge]
 
-# Redirect to https
-[http.middlewares]
-  [http.middlewares.redirect.redirectScheme]
-    scheme = "https"
-
 [api]
   dashboard = true
