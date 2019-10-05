@@ -12,13 +12,13 @@ services:
         traefik.http.routers.ghost.entrypoints: https
         traefik.http.routers.ghost.rule: Host(`${DOMAIN:?err}`)
         traefik.http.routers.ghost.tls.certresolver: letsencrypt
-        traefik.http.services.ghost-service.loadbalancer.server.port: 2368
-        traefik.enable: true
+        traefik.http.services.ghost-service.loadbalancer.server.port: "2368"
+        traefik.enable: "true"
 
 volumes:
   ghost:
 
 networks:
   default:
-    external:
-      name: traefik-net
+    name: traefik-net
+    external: true

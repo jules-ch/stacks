@@ -9,14 +9,14 @@ services:
       COMMENTO_ORIGIN: https://${DOMAIN:?err}
       COMMENTO_PORT: 8090
       COMMENTO_POSTGRES: postgres://commento:commento@db:5432/commento?sslmode=disable
-      COMMENTO_FORBID_NEW_OWNERS: true
+      COMMENTO_FORBID_NEW_OWNERS: "true"
     deploy:
       labels:
-        traefik.enable: true
+        traefik.enable: "true"
         traefik.http.routers.commento.entrypoints: https
         traefik.http.routers.commento.rule: Host(`${DOMAIN:?err}`)
         traefik.http.routers.commento.tls.certresolver: letsencrypt
-        traefik.http.services.commento-service.loadbalancer.server.port: 8090
+        traefik.http.services.commento-service.loadbalancer.server.port: "8090"
     depends_on:
       - db
   db:
@@ -33,5 +33,5 @@ volumes:
 
 networks:
   default:
-    external:
-      name: traefik-net
+    name: traefik-net
+    external: true
