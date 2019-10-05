@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+    server:
+      image: usefathom/fathom:version-1.2.1
+      environment:
+        FATHOM_DATABASE_DRIVER: postgres
+        FATHOM_DATABASE_NAME: fathom
+        FATHOM_DATABASE_USER: fathom
+        FATHOM_DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+        FATHOM_DATABASE_HOST: db:5432
+      depends_on:
+        - db
+      deploy:
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.fathom.rule: Host(`${DOMAIN_FATHOM:?err}`)
+          traefik.http.routers.fathom.middlewares: ipwhitelist
+          traefik.http.services.fathom.loadbalancer.server.port: "8080"
+      networks:
+        - internal
+        - external
+
+    db:
+      image: postgres:12
+      environment:
+        POSTGRES_DB: fathom
+        POSTGRES_USER: fathom
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      volumes:
+        - postgres_data_volume:/var/lib/postgresql/data
+      networks:
+        - internal
+volumes:
+  postgres_data_volume:
+
+networks:
+  external:
+    name: traefik-net
+    external: true
+  internal:
