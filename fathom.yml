@@ -11,8 +11,9 @@ services:
       deploy:
         labels:
           traefik.enable: "true"
+          traefik.http.routers.fathom.entrypoints: https
+          traefik.http.routers.fathom.tls.certresolver: letsencrypt
           traefik.http.routers.fathom.rule: Host(`${DOMAIN_FATHOM:?err}`)
-          traefik.http.routers.fathom.middlewares: ipwhitelist
           traefik.http.services.fathom.loadbalancer.server.port: "8080"
       networks:
         - internal
