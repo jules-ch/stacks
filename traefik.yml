@@ -22,6 +22,7 @@ services:
         traefik.http.routers.api.service: api@internal
         traefik.http.routers.api.middlewares: ipwhitelist
         traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange: ${IP_WHITELIST:?err}, 127.0.0.1
+        traefik.http.services.api.loadbalancer.server.port: "8080"
     configs:
       - source: traefik.toml
         target: /traefik.toml
