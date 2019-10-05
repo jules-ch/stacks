@@ -13,6 +13,7 @@ defaultEntryPoints = ["https","http"]
   swarmmode = true
   exposedByDefault = false
   network = "traefik-net"
+  endpoint = "tcp://dockerproxy:2375"
 
 # Enable ACME (Let's Encrypt): automatic SSL.
 [certificatesResolvers.letsencrypt.acme]

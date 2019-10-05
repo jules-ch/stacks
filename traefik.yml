@@ -13,7 +13,6 @@ services:
         protocol: tcp
         mode: host
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - certs:/letsencrypt
     deploy:
       placement:
@@ -26,6 +25,26 @@ services:
     configs:
       - source: traefik.toml
         target: /traefik.toml
+    networks:
+      - dockersocket
+      - default
+
+  # restrict access to docker socket 
+  dockerproxy:
+    image: tecnativa/docker-socket-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints: [node.role==manager]
+      mode: global
+    environment: 
+      SERVICES: 1
+      NETWORKS: 1
+      TASKS: 1
+    networks:
+      - dockersocket
+
 configs:
   traefik.toml:
     file: ./config/traefik.toml
@@ -39,3 +58,5 @@ networks:
     name: traefik-net
     driver: overlay
     attachable: true
+  dockersocket:
+    driver: overlay
