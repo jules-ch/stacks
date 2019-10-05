@@ -22,6 +22,7 @@ services:
         traefik.http.routers.api.entrypoints: http
         traefik.http.routers.api.rule: Host(`${DOMAIN_TRAEFIK:?err}`)
         traefik.http.routers.api.middlewares: ipwhitelist
+        traefik.http.routers.api.service: api@internal
         traefik.http.middlewares.redirect-https.redirectScheme.scheme: "https"
         traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange: ${IP_WHITELIST:?err}, 127.0.0.1
         traefik.http.services.api.loadbalancer.server.port: "8080"
