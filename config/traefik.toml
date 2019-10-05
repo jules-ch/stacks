@@ -5,11 +5,8 @@ defaultEntryPoints = ["https","http"]
 [entryPoints]
   [entryPoints.http]
   address = ":80"
-    [entryPoints.http.redirect]
-    entryPoint = "https"
   [entryPoints.https]
   address = ":443"
-    [entryPoints.https.tls]
 
 
 [providers.docker]
@@ -26,8 +23,3 @@ defaultEntryPoints = ["https","http"]
 
   # Use a TLS-ALPN-01 ACME challenge.
   [certificatesResolvers.letsencrypt.acme.tlsChallenge]
-
-
-[accessLog]
-  filePath = "/var/log/traefik/access.log.json"
-  format = "json"
