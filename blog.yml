@@ -17,11 +17,19 @@ services:
         traefik.http.routers.ghost-secure.rule: Host(`${DOMAIN_GHOST:?err}`)
         traefik.http.routers.ghost-secure.tls.certresolver: letsencrypt
         traefik.http.services.ghost-service.loadbalancer.server.port: "2368"
+    networks:
+      - external
+      - internal
 
 volumes:
   ghost:
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_SERVER:?err},nfsvers=4,nolock,soft,rw"
+      device: :/mnt/data/blog/ghost
 
 networks:
-  default:
+  external:
     name: traefik-net
     external: true
+  internal:

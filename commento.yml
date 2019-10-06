@@ -30,6 +30,10 @@ services:
 
 volumes:
   postgres_data_volume:
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_SERVER:?err},nfsvers=4,nolock,soft,rw"
+      device: :/mnt/data/commento/db
 
 networks:
   default:
