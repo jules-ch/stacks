@@ -13,7 +13,8 @@ services:
       mail__options__port: 587
       mail__options__secureConnection: "true"
       mail__options__auth__user: ${MAILGUN_USER:?err}
-      mail__options__auth__password: ${MAILGUN_PASSWORD:?err}
+      mail__options__auth__pass: ${MAILGUN_PASSWORD:?err}
+      mail__from: ${MAIL_FROM_GHOST:-'Example Blog' <noreply@blog.example.com>}
 
     deploy:
       labels:
