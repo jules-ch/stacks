@@ -10,7 +10,7 @@ services:
       mail__transport: SMTP
       mail__options__service: MAILGUN
       mail__options__host: "smtp.eu.mailgun.org"
-      mail__options__port: 587
+      mail__options__port: 465
       mail__options__secureConnection: "true"
       mail__options__auth__user: ${MAILGUN_USER:?err}
       mail__options__auth__pass: ${MAILGUN_PASSWORD:?err}
