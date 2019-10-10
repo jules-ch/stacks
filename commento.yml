@@ -10,6 +10,12 @@ services:
       COMMENTO_PORT: 8090
       COMMENTO_POSTGRES: postgres://commento:commento@db:5432/commento?sslmode=disable
       COMMENTO_FORBID_NEW_OWNERS: "true"
+      COMMENTO_SMTP_HOST: "smtp.eu.mailgun.org"
+      COMMENTO_SMTP_PORT: 587
+      COMMENTO_SMTP_USERNAME: ${MAILGUN_USER:?err}
+      COMMENTO_SMTP_PASSWORD: ${MAILGUN_PASSWORD:?err}
+      COMMENTO_SMTP_FROM_ADDRESS: ${MAIL_FROM_COMMENTO:-'Example Blog' <noreply@commento.example.com>}
+
     deploy:
       labels:
         traefik.enable: "true"
