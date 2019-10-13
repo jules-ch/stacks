@@ -40,10 +40,10 @@ services:
       labels:
         traefik.enable: "true"
         traefik.http.routers.ghost-fr.entrypoints: http
-        traefik.http.routers.ghost-fr.rule: Host(`${DOMAIN_GHOST:?err}`) && PathPrefix(`/fr`))
+        traefik.http.routers.ghost-fr.rule: Host(`${DOMAIN_GHOST:?err}`) && PathPrefix(`/fr`)
         traefik.http.routers.ghost-fr.middlewares: redirect-https
         traefik.http.routers.ghost-fr-secure.entrypoints: https
-        traefik.http.routers.ghost-fr-secure.rule: Host(`${DOMAIN_GHOST:?err}`)
+        traefik.http.routers.ghost-fr-secure.rule: Host(`${DOMAIN_GHOST:?err}`) && PathPrefix(`/fr`)
         traefik.http.routers.ghost-fr-secure.tls.certresolver: letsencrypt
         traefik.http.services.ghost-fr-service.loadbalancer.server.port: "2368"
     networks:
