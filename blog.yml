@@ -1,10 +1,8 @@
 version: '3.7'
 
 services:
-  web:
-    image: ghost:2.31-alpine
-    volumes:
-      - ghost:/var/lib/ghost/content:nocopy
+  x-blog: &blog-app
+    image: ghost:2.36-alpine
     environment:
       url: https://${DOMAIN_GHOST:?err}
       mail__transport: SMTP
@@ -16,6 +14,10 @@ services:
       mail__options__auth__pass: ${MAILGUN_PASSWORD:?err}
       mail__from: ${MAIL_FROM_GHOST:-'Example Blog' <noreply@blog.example.com>}
 
+  web:
+    <<: *blog-app 
+    volumes:
+      - ghost:/var/lib/ghost/content:nocopy
     deploy:
       labels:
         traefik.enable: "true"
@@ -28,7 +30,24 @@ services:
         traefik.http.services.ghost-service.loadbalancer.server.port: "2368"
     networks:
       - external
-      - internal
+  web-fr:
+    <<: *blog-app 
+    volumes:
+      - ghost-fr:/var/lib/ghost/content:nocopy
+    environment:
+      url: https://${DOMAIN_GHOST:?err}/fr/
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.http.routers.ghost-fr.entrypoints: http
+        traefik.http.routers.ghost-fr.rule: Host(`${DOMAIN_GHOST:?err}`) && PathPrefix(`/fr`))
+        traefik.http.routers.ghost-fr.middlewares: redirect-https
+        traefik.http.routers.ghost-fr-secure.entrypoints: https
+        traefik.http.routers.ghost-fr-secure.rule: Host(`${DOMAIN_GHOST:?err}`)
+        traefik.http.routers.ghost-fr-secure.tls.certresolver: letsencrypt
+        traefik.http.services.ghost-fr-service.loadbalancer.server.port: "2368"
+    networks:
+      - external
 
 volumes:
   ghost:
@@ -36,9 +55,12 @@ volumes:
       type: nfs
       o: "addr=${NFS_SERVER:?err},nfsvers=4,nolock,soft,rw"
       device: :/mnt/data/blog/ghost
-
+  ghost-fr:
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_SERVER:?err},nfsvers=4,nolock,soft,rw"
+      device: :/mnt/data/blog/ghost-fr
 networks:
   external:
     name: traefik-net
     external: true
-  internal:
