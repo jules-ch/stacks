@@ -15,7 +15,6 @@ services:
       COMMENTO_SMTP_USERNAME: ${MAILGUN_USER:?err}
       COMMENTO_SMTP_PASSWORD: ${MAILGUN_PASSWORD:?err}
       COMMENTO_SMTP_FROM_ADDRESS: ${MAIL_FROM_COMMENTO:-'Example Blog' <noreply@commento.example.com>}
-
     deploy:
       labels:
         traefik.enable: "true"
@@ -25,6 +24,9 @@ services:
         traefik.http.services.commento-service.loadbalancer.server.port: "8090"
     depends_on:
       - db
+    networks:
+      - external
+      - internal
   db:
     image: postgres:12
     environment:
@@ -33,6 +35,8 @@ services:
       POSTGRES_PASSWORD: commento
     volumes:
       - postgres_data_volume:/var/lib/postgresql/data
+    networks:
+      - internal
 
 volumes:
   postgres_data_volume:
@@ -42,6 +46,7 @@ volumes:
       device: :/mnt/data/commento/db
 
 networks:
-  default:
+  external:
     name: traefik-net
     external: true
+  internal:
