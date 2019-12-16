@@ -2,6 +2,8 @@ debug = false
 logLevel = "INFO"
 defaultEntryPoints = ["https","http"]
 
+[accessLog]
+
 [entryPoints]
   [entryPoints.http]
   address = ":80"
