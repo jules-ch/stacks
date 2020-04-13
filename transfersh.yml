@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+    server:
+      image: dutchcoders/transfer.sh:latest
+      deploy:
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.transfer.entrypoints: https
+          traefik.http.routers.transfer.tls.certresolver: letsencrypt
+          traefik.http.routers.transfer.rule: Host(`${DOMAIN_YOUTRANSFER:?err}`)
+          traefik.http.services.transfer.loadbalancer.server.port: "8080"
+      networks:
+        - internal
+        - external
+      volumes:
+        - data:/tmp
+      command: --provider local --basedir /tmp/
+
+volumes:
+  data:
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_SERVER:?err},nfsvers=4,nolock,soft,rw"
+      device: :/mnt/data/transfer/
+
+networks:
+  external:
+    name: traefik-net
+    external: true
+  internal:
