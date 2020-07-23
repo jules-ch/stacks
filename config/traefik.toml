@@ -7,6 +7,11 @@ defaultEntryPoints = ["https","http"]
 [entryPoints]
   [entryPoints.http]
   address = ":80"
+    [entryPoints.http.http]
+    [entryPoints.http.http.redirections]
+      [entryPoints.http.http.redirections.entrypoint]
+        to = "https"
+        scheme = "https"
   [entryPoints.https]
   address = ":443"
 
@@ -27,6 +32,10 @@ defaultEntryPoints = ["https","http"]
 
   # Use a TLS-ALPN-01 ACME challenge.
   [certificatesResolvers.letsencrypt.acme.tlsChallenge]
+
+[tls.options]
+  [tls.options.default]
+    minVersion = "VersionTLS12"
 
 [api]
   dashboard = true
