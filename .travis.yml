@@ -8,7 +8,7 @@ env:
     - DOCKER_CERT_PATH="$TRAVIS_BUILD_DIR/.certs"
 
 before_script:
-  - openssl aes-256-cbc -K $encrypted_24c2cfd1ceb0_key -iv $encrypted_24c2cfd1ceb0_iv -in certs.tar.enc -out certs.tar -d
+  - openssl aes-256-cbc -K $encrypted_235106e876e9_key -iv $encrypted_235106e876e9_iv -in certs.tar.enc -out certs.tar -d
   - mkdir $DOCKER_CERT_PATH
   - tar xvf certs.tar -C $DOCKER_CERT_PATH
 
