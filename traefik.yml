@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   proxy:
-    image: traefik:2.2.1
+    image: traefik:2.3
     ports:
       - target: 80
         published: 80
@@ -12,6 +12,7 @@ services:
         published: 443
         protocol: tcp
         mode: host
+      - "8080:8080"
     volumes:
       - certs:/letsencrypt
     deploy:
@@ -25,6 +26,7 @@ services:
         traefik.http.routers.api.service: api@internal
         traefik.http.middlewares.redirect-https.redirectScheme.scheme: "https"
         traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange: ${IP_WHITELIST:?err}, 127.0.0.1
+        traefik.http.routers.api.tls.certresolver: letsencrypt
         traefik.http.services.api.loadbalancer.server.port: "8080"
 
     configs:
