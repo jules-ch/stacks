@@ -3,6 +3,7 @@ logLevel = "INFO"
 defaultEntryPoints = ["https","http"]
 
 [accessLog]
+  filePath = "/srv/logs/access.log"
 
 [entryPoints]
   [entryPoints.http]

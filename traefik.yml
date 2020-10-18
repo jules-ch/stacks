@@ -15,6 +15,7 @@ services:
       - "8080:8080"
     volumes:
       - certs:/letsencrypt
+      - logs:/srv/logs:rw
     deploy:
       placement:
         constraints: [node.role==manager]
@@ -34,6 +35,31 @@ services:
     networks:
       - dockersocket
       - default
+
+  goaccess:
+    image: allinurl/goaccess
+    command: /srv/logs/access.log -o /srv/report/index.html --log-format=COMBINED --real-time-html
+    volumes:
+      - logs:/srv/logs:ro
+      - report:/srv/report:rw
+
+    networks:
+      - default
+
+  goaccess-web:
+    image: nginx-alpine:stable
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.http.routers.goaccess.rule: Host(`${DOMAIN_GOACCESS:?err}`)
+        traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange: ${IP_WHITELIST:?err}, 127.0.0.1
+        traefik.http.routers.goaccess.tls.certresolver: letsencrypt
+        traefik.http.services.goaccess.loadbalancer.server.port: "80"
+        traefik.http.routers.api.tls.certresolver: letsencrypt
+        traefik.http.routers.ghost-fr-secure.entrypoints: https, http
+    volumes:
+      - report:/usr/share/nginx/html:ro
+
 
   # restrict access to docker socket 
   dockerproxy:
@@ -58,6 +84,8 @@ configs:
 
 volumes:
   certs:
+  logs:
+  report:
 
 networks:
   default:
