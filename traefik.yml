@@ -47,7 +47,7 @@ services:
       - default
 
   goaccess-web:
-    image: nginx-alpine:stable
+    image: nginx:stable
     deploy:
       labels:
         traefik.enable: "true"
@@ -55,7 +55,6 @@ services:
         traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange: ${IP_WHITELIST:?err}, 127.0.0.1
         traefik.http.routers.goaccess.tls.certresolver: letsencrypt
         traefik.http.services.goaccess.loadbalancer.server.port: "80"
-        traefik.http.routers.api.tls.certresolver: letsencrypt
         traefik.http.routers.ghost-fr-secure.entrypoints: https, http
     volumes:
       - report:/usr/share/nginx/html:ro
