@@ -1,5 +1,5 @@
 {
   "docker-compose": {
-    "fileMatch": ["blog.yml", "fathom.yml", "commento.yml"]
+    "fileMatch": ["blog.yml", "fathom.yml", "commento.yml", "fathom.yml", "traefik.yml", "transfersh.yml"]
   }
 }
