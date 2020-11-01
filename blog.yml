@@ -21,9 +21,9 @@ services:
     deploy:
       labels:
         traefik.enable: "true"
-        traefik.http.routers.ghost-secure.entrypoints: https, http
-        traefik.http.routers.ghost-secure.rule: Host(`${DOMAIN_GHOST:?err}`)
-        traefik.http.routers.ghost-secure.tls.certresolver: letsencrypt
+        traefik.http.routers.ghost.entrypoints: https
+        traefik.http.routers.ghost.rule: Host(`${DOMAIN_GHOST:?err}`)
+        traefik.http.routers.ghost.tls.certresolver: letsencrypt
         traefik.http.services.ghost-service.loadbalancer.server.port: "2368"
     networks:
       - external
@@ -36,9 +36,9 @@ services:
     deploy:
       labels:
         traefik.enable: "true"
-        traefik.http.routers.ghost-fr-secure.entrypoints: https, http
-        traefik.http.routers.ghost-fr-secure.rule: Host(`${DOMAIN_GHOST:?err}`) && PathPrefix(`/fr`)
-        traefik.http.routers.ghost-fr-secure.tls.certresolver: letsencrypt
+        traefik.http.routers.ghost-fr.entrypoints: https
+        traefik.http.routers.ghost-fr.rule: Host(`${DOMAIN_GHOST:?err}`) && PathPrefix(`/fr`)
+        traefik.http.routers.ghost-fr.tls.certresolver: letsencrypt
         traefik.http.services.ghost-fr-service.loadbalancer.server.port: "2368"
     networks:
       - external
