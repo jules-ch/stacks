@@ -55,7 +55,7 @@ services:
         traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange: ${IP_WHITELIST:?err}, 127.0.0.1
         traefik.http.routers.goaccess.tls.certresolver: letsencrypt
         traefik.http.services.goaccess.loadbalancer.server.port: "80"
-        traefik.http.routers.ghost-fr-secure.entrypoints: https, http
+        traefik.http.routers.goaccess.entrypoints: https
     volumes:
       - report:/usr/share/nginx/html:ro
       - ./config/goaccess-nginx.conf:/etc/nginx/conf.d/default.conf
