@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
     server:
-      image: dutchcoders/transfer.sh:1.2.1
+      image: dutchcoders/transfer.sh:v1.2.2
       deploy:
         labels:
           traefik.enable: "true"
