@@ -20,7 +20,7 @@ jobs:
           CONFIG_VERSION: 7
           DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
           DOCKER_CERT_PATH: "./.certs"
-          DOCKER_TLS_VERIFY=1
+          DOCKER_TLS_VERIFY: 1
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           MAIL_FROM_COMMENTO: noreply@blog.julescheron.com
           MAIL_FROM_GHOST: "'Jules Chéron Blog' <noreply@blog.julescheron.com>"
