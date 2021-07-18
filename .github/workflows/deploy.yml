@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-hub/docker/login@master
+        env:
+          CONFIG_VERSION: 7
+          DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
+          DOCKER_CERT_PATH: "./.certs"
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          MAIL_FROM_COMMENTO: noreply@blog.julescheron.com
+          MAIL_FROM_GHOST: 'Jules Chéron Blog' <noreply@blog.julescheron.com>
+          DOMAIN_TRAEFIK: traefik.julescheron.com
+          DOMAIN_GOACCESS: goaccess.julescheron.com
+          DOMAIN_GHOST: blog.julescheron.com
+          DOMAIN_YOUTRANSFER: youtransfer.julescheron.com
+          DOMAIN_FATHOM: fathom.julescheron.com
+          DOMAIN_COMMENTO: commento.julescheron.com
+          IP_WHITELIST: ${{ secrets.IP_WHITELIST }}
+          MAILGUN_USER: ${{ secrets.MAILGUN_USER }}
+          MAILGUN_PASSWORD: ${{ secrets.MAILGUN_PASSWORD }}
+          NFS_SERVER: ${{ secrets.NFS_SERVER }}
+        run: |
+        gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output certs.tar certs.tar.gpg
+        mkdir $DOCKER_CERT_PATH
+        tar xvf certs.tar -C $DOCKER_CERT_PATH
+        ./deploy.sh
