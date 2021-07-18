@@ -17,7 +17,7 @@ jobs:
           DOCKER_CERT_PATH: "./.certs"
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           MAIL_FROM_COMMENTO: noreply@blog.julescheron.com
-          MAIL_FROM_GHOST: 'Jules Chéron Blog' <noreply@blog.julescheron.com>
+          MAIL_FROM_GHOST: "'Jules Chéron Blog' <noreply@blog.julescheron.com>"
           DOMAIN_TRAEFIK: traefik.julescheron.com
           DOMAIN_GOACCESS: goaccess.julescheron.com
           DOMAIN_GHOST: blog.julescheron.com
@@ -28,8 +28,9 @@ jobs:
           MAILGUN_USER: ${{ secrets.MAILGUN_USER }}
           MAILGUN_PASSWORD: ${{ secrets.MAILGUN_PASSWORD }}
           NFS_SERVER: ${{ secrets.NFS_SERVER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output certs.tar certs.tar.gpg
-        mkdir $DOCKER_CERT_PATH
-        tar xvf certs.tar -C $DOCKER_CERT_PATH
-        ./deploy.sh
+          gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output certs.tar certs.tar.gpg
+          mkdir $DOCKER_CERT_PATH
+          tar xvf certs.tar -C $DOCKER_CERT_PATH
+          ./deploy.sh
