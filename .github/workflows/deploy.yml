@@ -39,4 +39,4 @@ jobs:
           gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output certs.tar certs.tar.gpg
           mkdir $DOCKER_CERT_PATH
           tar xvf certs.tar -C $DOCKER_CERT_PATH
-          docker ps
+          ./deploy.sh
