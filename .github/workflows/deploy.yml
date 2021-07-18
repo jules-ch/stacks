@@ -20,6 +20,7 @@ jobs:
           CONFIG_VERSION: 7
           DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
           DOCKER_CERT_PATH: "./.certs"
+          DOCKER_TLS_VERIFY=1
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           MAIL_FROM_COMMENTO: noreply@blog.julescheron.com
           MAIL_FROM_GHOST: "'Jules Chéron Blog' <noreply@blog.julescheron.com>"
@@ -35,7 +36,7 @@ jobs:
           NFS_SERVER: ${{ secrets.NFS_SERVER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
-          gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output $DOCKER_CERT_PATH/certs.tar certs.tar.gpg
+          gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output certs.tar certs.tar.gpg
           mkdir $DOCKER_CERT_PATH
           tar xvf certs.tar -C $DOCKER_CERT_PATH
           ./deploy.sh
