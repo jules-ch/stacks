@@ -35,6 +35,8 @@ jobs:
           MAILGUN_PASSWORD: ${{ secrets.MAILGUN_PASSWORD }}
           NFS_SERVER: ${{ secrets.NFS_SERVER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          COMMENTO_GITHUB_KEY: ${{ secrets.COMMENTO_GITHUB_KEY }}
+          COMMENTO_GITHUB_SECRET: ${{ secrets.COMMENTO_GITHUB_SECRET }}
         run: |
           gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output certs.tar certs.tar.gpg
           mkdir $DOCKER_CERT_PATH
