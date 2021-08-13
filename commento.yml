@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   server:
-    image: registry.gitlab.com/commento/commento:latest
+    image: caroga/commentoplusplus:v1.8.6
     ports:
       - 8090:8090
     environment:
