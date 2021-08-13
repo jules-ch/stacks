@@ -15,6 +15,8 @@ services:
       COMMENTO_SMTP_USERNAME: ${MAILGUN_USER:?err}
       COMMENTO_SMTP_PASSWORD: ${MAILGUN_PASSWORD:?err}
       COMMENTO_SMTP_FROM_ADDRESS: ${MAIL_FROM_COMMENTO:-'Example Blog' <noreply@commento.example.com>}
+      COMMENTO_GITHUB_KEY: ${COMMENTO_GITHUB_KEY:?err}
+      COMMENTO_GITHUB_SECRET: ${COMMENTO_GITHUB_SECRET:?err}
     deploy:
       labels:
         traefik.enable: "true"
