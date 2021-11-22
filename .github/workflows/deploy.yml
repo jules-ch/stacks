@@ -14,14 +14,16 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
+      - name: Decrypt certificates
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output certs.tar certs.tar.gpg
       - name : Deploy stacks
         env:
           CONFIG_VERSION: 7
           DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
           DOCKER_CERT_PATH: "./.certs"
           DOCKER_TLS_VERIFY: 1
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           MAIL_FROM_COMMENTO: noreply@blog.julescheron.com
           MAIL_FROM_GHOST: "'Jules Chéron Blog' <noreply@blog.julescheron.com>"
           DOMAIN_TRAEFIK: traefik.julescheron.com
@@ -38,7 +40,6 @@ jobs:
           COMMENTO_GITHUB_KEY: ${{ secrets.COMMENTO_GITHUB_KEY }}
           COMMENTO_GITHUB_SECRET: ${{ secrets.COMMENTO_GITHUB_SECRET }}
         run: |
-          gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output certs.tar certs.tar.gpg
           mkdir $DOCKER_CERT_PATH
           tar xvf certs.tar -C $DOCKER_CERT_PATH
           bash ./deploy.sh
