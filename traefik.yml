@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   proxy:
-    image: traefik:v2.5
+    image: traefik:v2.6
     ports:
       - target: 80
         published: 80
