@@ -1,7 +1,7 @@
 version: '3.7'
 
 x-blog: &blog-app
-  image: ghost:4.32.0-alpine
+  image: ghost:4.32.3-alpine
   environment:
     url: https://${DOMAIN_GHOST:?err}
     mail__transport: SMTP
