@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   server:
-    image: caroga/commentoplusplus:v1.8.6
+    image: caroga/commentoplusplus:v1.8.7
     ports:
       - 8090:8090
     environment:
