@@ -30,7 +30,7 @@ services:
       - external
       - internal
   db:
-    image: postgres:12
+    image: postgres:17
     environment:
       POSTGRES_DB: commento
       POSTGRES_USER: commento
