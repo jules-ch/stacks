@@ -35,7 +35,7 @@ services:
       mail__options__auth__pass: ${MAILGUN_PASSWORD:?err}
       mail__from: ${MAIL_FROM_GHOST:-'Example Blog' <noreply@blog.example.com>}
       database__connection__host: db
-      database__connection__username: ghost
+      database__connection__user: ghost
       database__connection__password: ${BLOG_DB_PASSWORD}
       database__connection__database: blog
     volumes:
