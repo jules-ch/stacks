@@ -91,3 +91,4 @@ networks:
   external:
     name: traefik-net
     external: true
+  internal:
