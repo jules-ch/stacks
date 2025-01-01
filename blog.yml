@@ -38,6 +38,8 @@ services:
       database__connection__username: ghost
       database__connection__password: ${BLOG_DB_PASSWORD}
       database__connection__database: blog
+    volumes:
+      - ghostv5:/var/lib/ghost/content:nocopy
     networks:
       - internal
       - external
@@ -77,6 +79,11 @@ volumes:
       type: nfs
       o: "addr=${NFS_SERVER:?err},nfsvers=4,nolock,soft,rw"
       device: :/mnt/data/blog/ghost
+  ghostv5:
+    driver_opts:
+      type: nfs
+      o: "addr=${NFS_SERVER:?err},nfsvers=4,nolock,soft,rw"
+      device: :/mnt/data/blog/ghostv5
   ghost-fr:
     driver_opts:
       type: nfs
