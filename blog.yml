@@ -16,14 +16,13 @@ x-blog: &blog-app
 services:
   db:
     image: mariadb:10.6
-    restart: always
     volumes:
       - db:/var/lib/mysql
     environment:
       - MARIADB_ROOT_PASSWORD=${MYSQL_PASSWORD}
     networks:
       - internal
-  web-v5:
+  web_v5:
     image: ghost:5
     environment:
       url: https://blogv2.julescheron.com
