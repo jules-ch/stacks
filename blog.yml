@@ -43,10 +43,10 @@ services:
     deploy:
       labels:
         traefik.enable: "true"
-        traefik.http.routers.ghost.entrypoints: https
-        traefik.http.routers.ghost.rule: Host(`blogv2.julescheron.com`)
-        traefik.http.routers.ghost.tls.certresolver: letsencrypt
-        traefik.http.services.ghost-service.loadbalancer.server.port: "2368"
+        traefik.http.routers.ghostv5.entrypoints: https
+        traefik.http.routers.ghostv5.rule: Host(`blogv2.julescheron.com`)
+        traefik.http.routers.ghostv5.tls.certresolver: letsencrypt
+        traefik.http.services.ghostv5-service.loadbalancer.server.port: "2368"
     networks:
       - internal
       - external
