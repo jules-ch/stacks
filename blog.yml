@@ -25,7 +25,7 @@ services:
   web_v5:
     image: ghost:5
     environment:
-      url: https://blogv2.julescheron.com
+      url: https://blog.julescheron.com
       mail__transport: SMTP
       mail__options__service: MAILGUN
       mail__options__host: "smtp.eu.mailgun.org"
