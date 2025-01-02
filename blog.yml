@@ -44,7 +44,7 @@ services:
       labels:
         traefik.enable: "true"
         traefik.http.routers.ghostv5.entrypoints: https
-        traefik.http.routers.ghostv5.rule: Host(`blogv2.julescheron.com`)
+        traefik.http.routers.ghostv5.rule: Host(`blog.julescheron.com`)
         traefik.http.routers.ghostv5.tls.certresolver: letsencrypt
         traefik.http.services.ghostv5-service.loadbalancer.server.port: "2368"
     networks:
@@ -57,7 +57,7 @@ services:
       - ghost:/var/lib/ghost/content:nocopy
     deploy:
       labels:
-        traefik.enable: "true"
+        traefik.enable: "false"
         traefik.http.routers.ghost.entrypoints: https
         traefik.http.routers.ghost.rule: Host(`${DOMAIN_GHOST:?err}`)
         traefik.http.routers.ghost.tls.certresolver: letsencrypt
