@@ -40,6 +40,13 @@ services:
       database__connection__database: blog
     volumes:
       - ghostv5:/var/lib/ghost/content:nocopy
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.http.routers.ghost.entrypoints: https
+        traefik.http.routers.ghost.rule: Host(`blogv2.julescheron.com`)
+        traefik.http.routers.ghost.tls.certresolver: letsencrypt
+        traefik.http.services.ghost-service.loadbalancer.server.port: "2368"
     networks:
       - internal
       - external
