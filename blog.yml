@@ -40,6 +40,8 @@ services:
       database__pool__min: 2
       database__pool__max: 10
       database__connection__database: blog
+      caching__contentAPI__maxAge: 60
+      caching_frontend__maxAge: 600
     volumes:
       - ghostv5:/var/lib/ghost/content:nocopy
     deploy:
