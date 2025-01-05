@@ -40,7 +40,6 @@ services:
       database__pool__min: 2
       database__pool__max: 10
       database__connection__database: blog
-      database__pool__ping: function (conn, cb) { conn.query('SELECT 1', cb); }  }
     volumes:
       - ghostv5:/var/lib/ghost/content:nocopy
     deploy:
