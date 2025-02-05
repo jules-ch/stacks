@@ -36,33 +36,6 @@ services:
       - dockersocket
       - default
 
-  goaccess:
-    image: allinurl/goaccess
-    command: /srv/logs/access.log -o /srv/report/index.html --log-format=COMBINED --real-time-html --ws-url=wss://${DOMAIN_GOACCESS:?err}:443/ws
-    volumes:
-      - logs:/srv/logs:ro
-      - report:/srv/report:rw
-
-    networks:
-      - default
-
-  goaccess-web:
-    image: nginx:stable
-    deploy:
-      labels:
-        traefik.enable: "true"
-        traefik.http.routers.goaccess.rule: Host(`${DOMAIN_GOACCESS:?err}`)
-        traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange: ${IP_WHITELIST:?err}, 127.0.0.1
-        traefik.http.routers.goaccess.tls.certresolver: letsencrypt
-        traefik.http.services.goaccess.loadbalancer.server.port: "80"
-        traefik.http.routers.goaccess.entrypoints: https
-    volumes:
-      - report:/usr/share/nginx/html:ro
-    configs:
-      - source: goaccess-nginx.conf
-        target: /etc/nginx/conf.d/default.conf
-
-
   # restrict access to docker socket 
   dockerproxy:
     image: tecnativa/docker-socket-proxy
