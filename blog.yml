@@ -15,7 +15,7 @@ x-blog: &blog-app
 
 services:
   db:
-    image: mariadb:10.6
+    image: mariadb:10.11
     volumes:
       - db:/var/lib/mysql
     environment:
